@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>協賛掲載イメージ シミュレーター</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <header class="bg-white shadow-sm border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold">
+                    S
+                </div>
+                <h1 class="text-xl font-bold text-slate-800">協賛掲載イメージ シミュレーター</h1>
+            </div>
+            <div class="text-sm text-slate-500 hidden sm:block">
+                〇〇学校祭 実行委員会
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 w-full">
+        
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-slate-900">掲載情報の入力</h2>
+            <p class="text-slate-600 mt-1">左側のフォームに入力すると、右側のプレビューにリアルタイムで反映されます。実際の学校祭ホームページでの見え方をご確認ください。</p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+            
+            <div class="w-full lg:w-1/2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                <h3 class="text-lg font-semibold text-slate-800 mb-6 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    入力フォーム
+                </h3>
+                
+                <form id="simulator-form" class="space-y-6">
+                    
+                    <!-- Logo Upload -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">企業ロゴ / 写真</label>
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl hover:border-indigo-400 transition-colors bg-slate-50">
+                            <div class="space-y-2 text-center">
+                                <svg class="mx-auto h-10 w-10 text-slate-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="flex text-sm text-slate-600 justify-center">
+                                    <label for="logo-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 px-2 py-1">
+                                        <span>ファイルを選択</span>
+                                        <input id="logo-upload" name="logo-upload" type="file" class="sr-only" accept="image/*">
+                                    </label>
+                                    <p class="pl-1 py-1">またはドラッグ＆ドロップ</p>
+                                </div>
+                                <p class="text-xs text-slate-500">PNG, JPG, GIF (最大 5MB)</p>
+                            </div>
+                        </div>
+                        <div id="file-name-display" class="mt-2 text-sm text-slate-500 hidden"></div>
+                    </div>
+
+                    <!-- Company URL -->
+                    <div>
+                        <label for="company-url" class="block text-sm font-medium text-slate-700 mb-1">企業URL</label>
+                        <input type="url" name="company-url" id="company-url" placeholder="https://example.com" 
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-lg p-2.5 border"
+                            value="https://example.com/tech-frontier">
+                    </div>
+
+                    <!-- Company Name -->
+                    <div>
+                        <label for="company-name" class="block text-sm font-medium text-slate-700 mb-1">企業名・団体名</label>
+                        <input type="text" name="company-name" id="company-name" placeholder="株式会社〇〇" 
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-lg p-2.5 border"
+                            value="株式会社テック・フロンティア">
+                    </div>
+
+                    <!-- Comment -->
+                    <div>
+                        <label for="company-comment" class="block text-sm font-medium text-slate-700 mb-1">応援コメント (約100文字推奨)</label>
+                        <textarea id="company-comment" name="company-comment" rows="4" 
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-lg p-2.5 border resize-y" 
+                            placeholder="学校祭へのメッセージや貴社のアピールポイントなどをご記入ください。">地域の学生の皆さんの創造力と情熱を応援しています！素晴らしい学校祭になることを社員一同祈念しております。</textarea>
+                        <div class="mt-1 flex justify-end">
+                            <span id="char-count" class="text-xs text-slate-500">51 文字</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex gap-3">
+                        <button type="button" id="reset-btn" class="flex-1 bg-white py-2.5 px-4 border border-slate-300 rounded-lg shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                            リセット
+                        </button>
+                        <button type="button" id="copy-html-btn" class="flex-1 bg-indigo-600 py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors flex justify-center items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                            内容を確定する
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="w-full lg:w-1/2 sticky top-8">
+                <h3 class="text-lg font-semibold text-slate-800 mb-6 flex items-center gap-2 px-2">
+                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                    プレビュー
+                </h3>
+                
+                <!-- Preview Container (Mimics actual site environment) -->
+                <div class="bg-slate-100 rounded-2xl p-6 sm:p-10 border border-slate-200 shadow-inner min-h-[400px] flex items-center justify-center">
+                    
+                    <!-- The actual card component based on previous design -->
+                    <div id="preview-card" class="w-full max-w-[600px] bg-white rounded-xl shadow-md overflow-hidden flex flex-col sm:flex-row border border-slate-100 transition-all duration-300">
+                        
+                        <!-- Logo Area -->
+                        <div class="sm:w-2/5 md:w-1/3 shrink-0 bg-slate-50 flex items-center justify-center p-4 border-b sm:border-b-0 sm:border-r border-slate-100">
+                            <img id="preview-logo" class="h-32 w-32 sm:h-full sm:w-full object-contain max-h-48 rounded-lg transition-all duration-300" 
+                                 src="https://placehold.co/400x400/4F46E5/ffffff?text=Tech+Frontier" 
+                                 alt="企業ロゴ">
+                        </div>
+                        
+                        <!-- Details Area -->
+                        <div class="p-5 flex flex-col flex-grow sm:w-3/5 md:w-2/3">
+                            
+                            <!-- URL Section -->
+                            <div class="mb-2 pb-2 border-b border-slate-100 flex items-center">
+                                <svg class="w-4 h-4 text-slate-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                                <a id="preview-url" href="https://example.com/tech-frontier" target="_blank" rel="noopener noreferrer" class="text-sm text-indigo-500 hover:text-indigo-700 hover:underline truncate">
+                                    example.com/tech-frontier
+                                </a>
+                            </div>
+                            
+                            <!-- Company Name Section -->
+                            <div class="mb-3 pb-3 border-b border-slate-100">
+                                <h3 id="preview-name" class="text-lg font-bold text-slate-900 leading-tight break-words">
+                                    株式会社テック・フロンティア
+                                </h3>
+                            </div>
+                            
+                            <!-- Comment Section -->
+                            <div class="flex-grow">
+                                <p id="preview-comment" class="text-sm text-slate-600 leading-relaxed italic whitespace-pre-wrap break-words">"地域の学生の皆さんの創造力と情熱を応援しています！素晴らしい学校祭になることを社員一同祈念しております。"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-slate-500">※スマートフォン等の画面幅が狭い端末では、ロゴが上部に、テキストが下部に配置されます。</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-full opacity-0 transition-all duration-300 flex items-center p-4 mb-4 text-emerald-800 border-t-4 border-emerald-300 bg-emerald-50 rounded-lg shadow-lg z-50" role="alert">
+        <svg class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+        <div class="ms-3 text-sm font-medium">
+            設定を完了しました。（実際にはここでデータ送信などの処理を行います）
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const urlInput = document.getElementById('company-url');
+            const nameInput = document.getElementById('company-name');
+            const commentInput = document.getElementById('company-comment');
+            const logoUpload = document.getElementById('logo-upload');
+            const fileNameDisplay = document.getElementById('file-name-display');
+            const charCount = document.getElementById('char-count');
+            const resetBtn = document.getElementById('reset-btn');
+            const confirmBtn = document.getElementById('copy-html-btn');
+            const toast = document.getElementById('toast');
+            
+            const previewUrl = document.getElementById('preview-url');
+            const previewName = document.getElementById('preview-name');
+            const previewComment = document.getElementById('preview-comment');
+            const previewLogo = document.getElementById('preview-logo');
+
+            // Default values
+            const defaultPlaceholderImg = "https://placehold.co/400x400/E2E8F0/475569?text=No+Logo";
+            
+            // Helper function to create display URL
+            const getDisplayUrl = (urlStr) => {
+                if (!urlStr) return 'URL未設定';
+                try {
+                    const url = new URL(urlStr);
+                    // Remove protocol and www. for display
+                    let display = url.hostname.replace('www.', '') + url.pathname;
+                    // Truncate if too long
+                    if (display.length > 30) display = display.substring(0, 30) + '...';
+                    return display;
+                } catch (e) {
+                    return urlStr; // Return as is if invalid URL format while typing
+                }
+            };
+
+            // Update Preview Functions
+            const updateUrlPreview = () => {
+                const val = urlInput.value.trim();
+                previewUrl.href = val || '#';
+                previewUrl.textContent = val ? getDisplayUrl(val) : 'URL未設定';
+            };
+
+            const updateNamePreview = () => {
+                const val = nameInput.value.trim();
+                previewName.textContent = val || '企業名未設定';
+            };
+
+            const updateCommentPreview = () => {
+                const val = commentInput.value.trim();
+                previewComment.textContent = val ? `"${val}"` : '"応援コメントが未設定です"';
+                // Update character count
+                charCount.textContent = `${val.length} 文字`;
+                if (val.length > 150) {
+                    charCount.classList.add('text-red-500');
+                    charCount.classList.remove('text-slate-500');
+                } else {
+                    charCount.classList.remove('text-red-500');
+                    charCount.classList.add('text-slate-500');
+                }
+            };
+
+            const handleLogoUpload = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    // Check file type
+                    if (!file.type.startsWith('image/')) {
+                        alert('画像ファイルを選択してください。');
+                        return;
+                    }
+                    
+                    // Display file name
+                    fileNameDisplay.textContent = `選択中: ${file.name}`;
+                    fileNameDisplay.classList.remove('hidden');
+
+                    // Read and preview image
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        previewLogo.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+
+            const resetForm = () => {
+                document.getElementById('simulator-form').reset();
+                
+                // Reset image preview specifically since form reset doesn't clear dynamically generated DataURLs
+                previewLogo.src = "https://placehold.co/400x400/4F46E5/ffffff?text=Tech+Frontier";
+                fileNameDisplay.classList.add('hidden');
+                fileNameDisplay.textContent = '';
+                
+                // Trigger updates to refresh preview with placeholder values
+                updateUrlPreview();
+                updateNamePreview();
+                updateCommentPreview();
+            };
+
+            const showToast = () => {
+                toast.classList.remove('translate-y-full', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('translate-y-full', 'opacity-0');
+                }, 3000);
+            };
+
+            // Event Listeners
+            urlInput.addEventListener('input', updateUrlPreview);
+            nameInput.addEventListener('input', updateNamePreview);
+            commentInput.addEventListener('input', updateCommentPreview);
+            logoUpload.addEventListener('change', handleLogoUpload);
+            resetBtn.addEventListener('click', resetForm);
+            
+            confirmBtn.addEventListener('click', () => {
+                // In a real application, you would gather data here and send to server
+                /*
+                const data = {
+                    url: urlInput.value,
+                    name: nameInput.value,
+                    comment: commentInput.value,
+                    // Handle image upload appropriately (e.g., FormData)
+                };
+                console.log("Submitting data:", data);
+                */
+                showToast();
+            });
+
+            // Drag and Drop support for the upload area
+            const dropZone = document.querySelector('.border-dashed');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight(e) {
+                dropZone.classList.add('border-indigo-500', 'bg-indigo-50');
+            }
+
+            function unhighlight(e) {
+                dropZone.classList.remove('border-indigo-500', 'bg-indigo-50');
+            }
+
+            dropZone.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+
+                if (files && files.length > 0) {
+                    logoUpload.files = files; // Assign files to input
+                    // Manually trigger change event
+                    const event = new Event('change');
+                    logoUpload.dispatchEvent(event);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
