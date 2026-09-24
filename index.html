@@ -30,7 +30,7 @@
                 <h1 class="text-xl font-bold text-slate-800">協賛掲載イメージ シミュレーター</h1>
             </div>
             <div class="text-sm text-slate-500 hidden sm:block">
-                〇〇学校祭 実行委員会
+                
             </div>
         </div>
     </header>
@@ -76,9 +76,9 @@
                     <!-- Company URL -->
                     <div>
                         <label for="company-url" class="block text-sm font-medium text-slate-700 mb-1">企業URL</label>
-                        <input type="url" name="company-url" id="company-url" placeholder="https://example.com" 
+                        <input type="url" name="company-url" id="company-url" placeholder="https://www.hakodate-ct.ac.jp/" 
                             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-lg p-2.5 border"
-                            value="https://example.com/tech-frontier">
+                            value="https://www.hakodate-ct.ac.jp/">
                     </div>
 
                     <!-- Company Name -->
@@ -86,17 +86,17 @@
                         <label for="company-name" class="block text-sm font-medium text-slate-700 mb-1">企業名・団体名</label>
                         <input type="text" name="company-name" id="company-name" placeholder="株式会社〇〇" 
                             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-lg p-2.5 border"
-                            value="株式会社テック・フロンティア">
+                            value="独立行政法人函館工業高等専門学校">
                     </div>
 
                     <!-- Comment -->
                     <div>
-                        <label for="company-comment" class="block text-sm font-medium text-slate-700 mb-1">応援コメント (約100文字推奨)</label>
+                        <label for="company-comment" class="block text-sm font-medium text-slate-700 mb-1">応援コメント (約100文字推奨、4行が限界)</label>
                         <textarea id="company-comment" name="company-comment" rows="4" 
                             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-slate-300 rounded-lg p-2.5 border resize-y" 
-                            placeholder="学校祭へのメッセージや貴社のアピールポイントなどをご記入ください。">地域の学生の皆さんの創造力と情熱を応援しています！素晴らしい学校祭になることを社員一同祈念しております。</textarea>
+                            placeholder="学校祭へのメッセージや貴社のアピールポイントなどをご記入ください。">函館高専はとっても素晴らしい学校ですよ。</textarea>
                         <div class="mt-1 flex justify-end">
-                            <span id="char-count" class="text-xs text-slate-500">51 文字</span>
+                            <span id="char-count" class="text-xs text-slate-500">20 文字</span>
                         </div>
                     </div>
 
@@ -127,7 +127,7 @@
                         <!-- Logo Area -->
                         <div class="sm:w-2/5 md:w-1/3 shrink-0 bg-slate-50 flex items-center justify-center p-4 border-b sm:border-b-0 sm:border-r border-slate-100">
                             <img id="preview-logo" class="h-32 w-32 sm:h-full sm:w-full object-contain max-h-48 rounded-lg transition-all duration-300" 
-                                 src="https://placehold.co/400x400/4F46E5/ffffff?text=Tech+Frontier" 
+                                 src="https://www.hakodate-ct.ac.jp/wp-content/uploads/2012/10/%E2%91%A1.jpg" 
                                  alt="企業ロゴ">
                         </div>
                         
@@ -137,7 +137,7 @@
                             <!-- URL Section -->
                             <div class="mb-2 pb-2 border-b border-slate-100 flex items-center">
                                 <svg class="w-4 h-4 text-slate-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                                <a id="preview-url" href="https://example.com/tech-frontier" target="_blank" rel="noopener noreferrer" class="text-sm text-indigo-500 hover:text-indigo-700 hover:underline truncate">
+                                <a id="preview-url" href="https://www.hakodate-ct.ac.jp/" target="_blank" rel="noopener noreferrer" class="text-sm text-indigo-500 hover:text-indigo-700 hover:underline truncate">
                                     example.com/tech-frontier
                                 </a>
                             </div>
@@ -145,13 +145,13 @@
                             <!-- Company Name Section -->
                             <div class="mb-3 pb-3 border-b border-slate-100">
                                 <h3 id="preview-name" class="text-lg font-bold text-slate-900 leading-tight break-words">
-                                    株式会社テック・フロンティア
+                                    独立行政法人函館工業高等専門学校
                                 </h3>
                             </div>
                             
                             <!-- Comment Section -->
                             <div class="flex-grow">
-                                <p id="preview-comment" class="text-sm text-slate-600 leading-relaxed italic whitespace-pre-wrap break-words">"地域の学生の皆さんの創造力と情熱を応援しています！素晴らしい学校祭になることを社員一同祈念しております。"</p>
+                                <p id="preview-comment" class="text-sm text-slate-600 leading-relaxed italic whitespace-pre-wrap break-words">"函館高専はとっても素晴らしい学校ですよ。"</p>
                             </div>
                         </div>
                     </div>
@@ -260,7 +260,7 @@
                 document.getElementById('simulator-form').reset();
                 
                 // Reset image preview specifically since form reset doesn't clear dynamically generated DataURLs
-                previewLogo.src = "https://placehold.co/400x400/4F46E5/ffffff?text=Tech+Frontier";
+                previewLogo.src = "https://www.hakodate-ct.ac.jp/wp-content/uploads/2012/10/%E2%91%A1.jpg";
                 fileNameDisplay.classList.add('hidden');
                 fileNameDisplay.textContent = '';
                 
